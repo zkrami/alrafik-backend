@@ -1,0 +1,10 @@
+{
+  "name": "db",
+  "connector": "mongodb",
+  "url": "mongodb://127.0.0.1:27017",
+  "host": "localhost",
+  "port": 27017,
+  "user": "rami",
+  "password": "1",
+  "database": "alrafik"
+}
