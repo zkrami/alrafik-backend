@@ -1,4 +1,4 @@
-import {Model, model, property} from '@loopback/repository';
+import { Model, model, property } from '@loopback/repository';
 
 @model()
 export class Action extends Model {

@@ -1,16 +1,11 @@
-import {AlrafikBackendApplication} from './application';
-import {ApplicationConfig} from '@loopback/core';
+import { ExpressServer } from './server';
+import { ApplicationConfig } from '@loopback/core';
 
-export {AlrafikBackendApplication};
+export { ExpressServer };
 
 export async function main(options: ApplicationConfig = {}) {
-  const app = new AlrafikBackendApplication(options);
-  await app.boot();
-  await app.start();
-
-  const url = app.restServer.url;
-  console.log(`Server is running at ${url}`);
-  console.log(`Try ${url}/ping`);
-
-  return app;
+  const server = new ExpressServer(options);
+  await server.boot();
+  await server.start();
+  console.log('Server is running adasdasdt http://127.0.0.1:3000');
 }

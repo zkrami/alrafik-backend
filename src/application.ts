@@ -5,11 +5,12 @@ import {
   RestExplorerComponent,
 } from '@loopback/rest-explorer';
 import { RepositoryMixin } from '@loopback/repository';
-import { RestApplication } from '@loopback/rest';
+import { RestApplication, OperationObject } from '@loopback/rest';
 import { ServiceMixin } from '@loopback/service-proxy';
 import * as path from 'path';
 import { MySequence } from './sequence';
-
+import { MediaControllerController } from './controllers';
+import { MediaRepository } from './repositories';
 export class AlrafikBackendApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {
@@ -19,12 +20,17 @@ export class AlrafikBackendApplication extends BootMixin(
     // Set up the custom sequence
     this.sequence(MySequence);
 
-    // Set up default home page
+
     this.static('/', path.join(__dirname, '../public'));
+
+
+
+
 
     // Customize @loopback/rest-explorer configuration here
     this.bind(RestExplorerBindings.CONFIG).to({
       path: '/explorer',
+
     });
 
     this.component(RestExplorerComponent);
@@ -39,5 +45,6 @@ export class AlrafikBackendApplication extends BootMixin(
         nested: true,
       },
     };
+
   }
 }
