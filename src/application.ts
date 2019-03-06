@@ -9,8 +9,8 @@ import { RestApplication, OperationObject } from '@loopback/rest';
 import { ServiceMixin } from '@loopback/service-proxy';
 import * as path from 'path';
 import { MySequence } from './sequence';
-import { MediaControllerController } from './controllers';
-import { MediaRepository } from './repositories';
+
+
 export class AlrafikBackendApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
 ) {

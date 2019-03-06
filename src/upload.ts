@@ -18,6 +18,7 @@ function uniqueName(name: string): string {
 router.use(cors(corsOptions));
 router.use(uploadx({
   maxUploadSize: '180MB',
+  allowMIME: ['audio/*'],
   destination: req => path.resolve(`../uploads/${uniqueName(req.body.name)}`)
 }),
   (req, res, next) => {

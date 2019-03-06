@@ -9,6 +9,7 @@ import * as bodyParser from 'body-parser';
 import { router as upload } from './upload';
 import { MediaRepository } from './repositories';
 import { Media } from './models';
+import { threadId } from 'worker_threads';
 
 export class ExpressServer {
   private app: express.Application;
@@ -34,6 +35,7 @@ export class ExpressServer {
     this.app.use(express.static('public'));
 
 
+
     // @temp
     this.app.get("/openapi.json", (req, res) => {
       res.redirect("/api/openapi.json");
@@ -51,19 +53,37 @@ export class ExpressServer {
       req.user = { id: 'userId' };
       next();
     });
+
     // uploadx
+    //serve uploadx uploads
+
+    this.app.use("/uploads", express.static("../uploads"));
+
     this.app.use('/uploadx/', upload, async (req, res) => {
 
-
+      // store file in db
+      // @todo shall put in controller
       let repo = await this.lbApp.getRepository(MediaRepository);
       let media = new Media();
-      media.path = req.path;
-      media.name = "teeet";
+      media.path = req.file.path;
+      media.name = req.file.metadata.name;
+      media.type = req.file.metadata.mimeType;
+      media.size = req.file.size;
+      media.url = "uploads/" + req.file.filename;
       repo.create(media);
     });
 
 
-    console.log(this.lbApp.getSync("controllers.MediaMediaController"));
+    // error handeler
+    this.app.use((err: any, req: Request, res: Response, next: any) => {
+      res.status(err.status || 500).json({
+        error: {
+          message: err.message || 'Internal Server Error'
+        }
+      });
+    });
+
+
 
   }
 
