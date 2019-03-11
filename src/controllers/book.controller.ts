@@ -5,7 +5,8 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-
+import * as fs from 'fs';
+import * as archiver from 'archiver';
 import {
   post,
   param,
@@ -16,15 +17,25 @@ import {
   put,
   del,
   requestBody,
+  Response,
+  RestBindings,
 } from '@loopback/rest';
 
-import { Book } from '../models';
-import { BookRepository } from '../repositories';
+import { Book, Shape, ActionType } from '../models';
+import { BookRepository, MediaRepository } from '../repositories';
+import { response } from 'express';
+import { Stream } from 'stream';
+import { inject } from '@loopback/core';
+
 
 export class BookController {
   constructor(
     @repository(BookRepository)
     public bookRepository: BookRepository,
+    @repository(MediaRepository)
+    public mediaRepository: MediaRepository,
+    @inject(RestBindings.Http.RESPONSE) public response: Response,
+
   ) { }
 
   @post('/books', {
@@ -135,5 +146,64 @@ export class BookController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.bookRepository.deleteById(id);
+  }
+
+
+  @get('/books/download/{id}', {
+    responses: {
+      '200': {
+        description: 'Book model instance',
+        content: { 'application/json': { schema: { 'x-ts-type': Book } } },
+      },
+    },
+  })
+  async download(@param.path.string('id') id: string): Promise<Stream> {
+
+
+    return new Promise(async (resolve, reject) => {
+
+
+      let archive = archiver('zip', {
+        zlib: { level: 9 } // Sets the compression level.
+      });
+
+      let book = await this.bookRepository.findById(id);
+
+      for (let page of book.pages) {
+
+        for (let shape of Object.values(page.shapes)) {
+          // foreach audio action
+          for (let action of shape.actions.filter((a: any) => a.type == ActionType.Audio)) {
+
+            for (let languageValue of Object.values(action.value)) {
+
+              // @ts-ignore
+              let mediaId = languageValue.mediaId;
+              let media = await this.mediaRepository.findById(mediaId);
+              archive.append(fs.createReadStream(media.path), { name: media.id });
+            }
+
+          }
+        }
+      }
+
+      archive.on("error", reject);
+
+      archive.append(JSON.stringify(book), { name: 'book.json' });
+
+      this.response.header('Content-Disposition', 'attachment;filename=Book.zip')
+        .header('Content-Type', 'attachment;filename=Book.zip')
+        .header('Content-Transfer-Encoding', 'binary');
+
+
+
+      archive.finalize();
+      // @todo resolve on finished
+      resolve(archive);
+
+
+
+    });
+
   }
 }

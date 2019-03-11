@@ -15,10 +15,12 @@ export class Page extends Model {
   id: string;
 
 
+  // key => value associative array to Shape Model
   @property({
     type: 'object',
+    default: {}
   })
-  shapes?: object;
+  shapes: object;
 
 
 

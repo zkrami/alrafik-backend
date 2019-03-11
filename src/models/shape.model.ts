@@ -12,8 +12,9 @@ export class Shape extends Model {
   @property({
     type: 'array',
     itemType: Action,
+    default: [],
   })
-  actions?: Action[];
+  actions: Action[] = [];
 
 
   constructor(data?: Partial<Shape>) {

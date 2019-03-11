@@ -3,6 +3,7 @@ import cors = require('cors');
 import { uploadx } from 'node-uploadx';
 import * as path from 'path';
 import * as uuid from 'uuid';
+import { environemt } from './environment';
 export let router = express.Router();
 
 
@@ -19,7 +20,7 @@ router.use(cors(corsOptions));
 router.use(uploadx({
   maxUploadSize: '180MB',
   allowMIME: ['audio/*'],
-  destination: req => path.resolve(`../uploads/${uniqueName(req.body.name)}`)
+  destination: req => path.resolve(environemt.uploadDirectory + `${uniqueName(req.body.name)}`)
 }),
   (req, res, next) => {
     if (req.file) {

@@ -26,8 +26,9 @@ export class Book extends Entity {
   @property({
     type: 'array',
     itemType: Page,
+    default: []
   })
-  pages?: Page[];
+  pages: Page[];
 
 
   constructor(data?: Partial<Book>) {

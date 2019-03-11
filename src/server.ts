@@ -61,6 +61,7 @@ export class ExpressServer {
 
     this.app.use('/uploadx/', upload, async (req, res) => {
 
+
       // store file in db
       // @todo shall put in controller
       let repo = await this.lbApp.getRepository(MediaRepository);
@@ -70,6 +71,10 @@ export class ExpressServer {
       media.type = req.file.metadata.mimeType;
       media.size = req.file.size;
       media.url = "uploads/" + req.file.filename;
+
+      if (req.header("bookId"))
+        media.bookId = req.header("bookId") as string;
+
       repo.create(media);
     });
 
