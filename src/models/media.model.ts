@@ -1,4 +1,5 @@
-import { Entity, model, property } from '@loopback/repository';
+import { Entity, model, property, belongsTo } from '@loopback/repository';
+import { Book } from './book.model';
 
 @model()
 export class Media extends Entity {
@@ -21,6 +22,12 @@ export class Media extends Entity {
   @property({
     type: 'string',
   })
+  name?: string;
+
+
+  @property({
+    type: 'string',
+  })
   url?: string;
 
   @property({
@@ -29,11 +36,11 @@ export class Media extends Entity {
   })
   path: string;
 
-  @property({
-    type: 'string',
-    required: true
-  })
+
+  @belongsTo(() => Book)
   bookId: string;
+
+
 
 
   constructor(data?: Partial<Media>) {

@@ -25,7 +25,7 @@ export class ExpressServer {
 
     // Custom Express routes
     this.app.get('/', function (_req: Request, res: Response) {
-      res.sendFile(path.resolve('public/express.html'));
+      res.sendFile(path.resolve('public/index.html'));
     });
     this.app.get('/hello', function (_req: Request, res: Response) {
       res.send('Hello world!');
