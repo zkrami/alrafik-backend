@@ -4,9 +4,25 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'npm --version'
+                sh 'npm install'
+                sh 'npm run clean'
+                sh 'npm run build'
+
             }
         }
+        stage('clean staging'){
+          steps{
+              sh 'forever stop alrafik'
+              sh 'rm -r /var/www/alrafik-backend'
+          }
+        }
+        stage('staging'){
+          steps{
+            sh 'cp -r . /var/www/alrafik-backend'
+            sh 'forever --uid alrafik start /var/www/alrafik-backend'
+          }
+        }
+
     }
       post {
         always {
