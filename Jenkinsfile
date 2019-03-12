@@ -16,6 +16,8 @@ pipeline {
             try{
               sh 'forever stop alrafik'
               sh 'rm -r /var/www/alrafik-backend'
+            }finally{
+
             }
           }
         }
