@@ -12,8 +12,11 @@ pipeline {
         }
         stage('clean staging'){
           steps{
+
+            try{
               sh 'forever stop alrafik'
               sh 'rm -r /var/www/alrafik-backend'
+            }
           }
         }
         stage('staging'){
