@@ -16,17 +16,17 @@ node {
             try
             {
               sh 'forever stop alrafik'
-              sh 'rm -r /var/www/alrafik-backend'
+
             }
             catch (exc) {
               echo 'Something failed, I should sound the klaxons!'
             }
 
+
         }
         stage('staging'){
 
-            sh 'cp -r . /var/www/alrafik-backend'
-            sh 'forever --uid alrafik start /var/www/alrafik-backend'
+            sh 'forever --uid alrafik start .'
 
         }
 
