@@ -18,7 +18,7 @@ pipeline {
               sh 'rm -r /var/www/alrafik-backend'
             }
 
-            catch{
+            catch(all){
 
             }
           }
