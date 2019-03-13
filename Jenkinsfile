@@ -30,7 +30,7 @@ node {
       }
 
         stage('staging'){
-            sh 'BUILD_ID=dontKillMe forever start index.js'
+            sh 'BUILD_ID=dontKillMe forever start index.js --minUptime 0 '
 
 
         }
