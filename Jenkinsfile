@@ -31,7 +31,7 @@ node {
 
         stage('staging'){
 
-            sh 'forever -a -l alrafik.log  index.js '
+            sh 'forever -a -l alrafik.log  index.js & exit 0'
 
         }
 
