@@ -1,7 +1,9 @@
 node {
 
 
-
+      stage('scm checkout'){
+          checkout scm
+      }
       stage('build') {
 
               sh 'npm install'

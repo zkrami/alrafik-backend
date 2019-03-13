@@ -9,7 +9,6 @@ import * as bodyParser from 'body-parser';
 import { router as upload } from './upload';
 import { MediaRepository } from './repositories';
 import { Media } from './models';
-import { threadId } from 'worker_threads';
 
 export class ExpressServer {
   private app: express.Application;
