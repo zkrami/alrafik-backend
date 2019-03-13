@@ -30,7 +30,7 @@ node {
       }
 
         stage('staging'){
-            sh 'BUILD_ID=dontKillMe forever start --minUptime 1 --spinSleepTime 1000 index.js'
+            sh 'JENKINS_NODE_COOKIE=dontKillMe forever start --minUptime 1 --spinSleepTime 1000 index.js'
 
 
         }
