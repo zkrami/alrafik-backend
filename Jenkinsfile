@@ -4,16 +4,7 @@ node {
       stage('scm checkout'){
           checkout scm
       }
-      stage('build') {
-
-              sh 'npm install'
-              sh 'npm run clean'
-
-              sh 'npm run build'
-
-
-      }
-        stage('clean staging'){
+      stage('clean'){
 
 
             try
@@ -27,6 +18,17 @@ node {
 
 
         }
+
+      stage('build') {
+
+              sh 'npm install'
+              sh 'npm run clean'
+
+              sh 'npm run build'
+
+
+      }
+
         stage('staging'){
 
             sh 'BUILD_ID=dontKillMe forever -a -l alrafik.log index.js &'
