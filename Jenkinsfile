@@ -15,7 +15,7 @@ node {
 
             try
             {
-              sh 'forever stop alrafik'
+              sh 'forever stop index.js'
 
             }
             catch (exc) {
@@ -26,7 +26,7 @@ node {
         }
         stage('staging'){
 
-            sh 'forever --uid alrafik start .'
+            sh 'BUILD_ID=dontKillMe forever -a -l alrafik.log index.js &'
 
         }
 
