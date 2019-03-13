@@ -9,6 +9,7 @@ import * as bodyParser from 'body-parser';
 import { router as upload } from './upload';
 import { MediaRepository } from './repositories';
 import { Media } from './models';
+import { environemt } from './environment';
 
 export class ExpressServer {
   private app: express.Application;
@@ -56,7 +57,7 @@ export class ExpressServer {
     // uploadx
     //serve uploadx uploads
 
-    this.app.use("/uploads", express.static("../uploads"));
+    this.app.use("/uploads", express.static(environemt.uploadDirectory));
 
     this.app.use('/uploadx/', upload, async (req, res) => {
 
