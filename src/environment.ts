@@ -1,5 +1,5 @@
 
 export const environemt = {
-  uploadDirectory: "../uploads/",
-  tempDirectory: "../temps/"
+  uploadDirectory: "/uploads/",
+  tempDirectory: "/temps/"
 }
