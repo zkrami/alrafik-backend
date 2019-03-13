@@ -30,8 +30,7 @@ node {
       }
 
         stage('staging'){
-            sh 'export BUILD_ID=dontKillMe'
-            sh 'forever -a -l myforever.log index.js &'
+            sh 'BUILD_ID=dontKillMe forever start index.js'
 
 
         }
