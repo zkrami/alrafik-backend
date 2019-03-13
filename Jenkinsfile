@@ -31,7 +31,7 @@ node {
 
         stage('staging'){
 
-            sh 'BUILD_ID=dontKillMe forever -a -l alrafik.log index.js &'
+            sh 'BUILD_ID=dontKillMe forever -a  index.js &'
 
         }
 
