@@ -16,20 +16,20 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Media} from '../models';
-import {MediaRepository} from '../repositories';
-
+import { Media } from '../models';
+import { MediaRepository } from '../repositories';
+import * as fs from 'fs';
 export class MediaController {
   constructor(
     @repository(MediaRepository)
-    public mediaRepository : MediaRepository,
-  ) {}
+    public mediaRepository: MediaRepository,
+  ) { }
 
   @post('/media', {
     responses: {
       '200': {
         description: 'Media model instance',
-        content: {'application/json': {schema: {'x-ts-type': Media}}},
+        content: { 'application/json': { schema: { 'x-ts-type': Media } } },
       },
     },
   })
@@ -41,7 +41,7 @@ export class MediaController {
     responses: {
       '200': {
         description: 'Media model count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -57,7 +57,7 @@ export class MediaController {
         description: 'Array of Media model instances',
         content: {
           'application/json': {
-            schema: {type: 'array', items: {'x-ts-type': Media}},
+            schema: { type: 'array', items: { 'x-ts-type': Media } },
           },
         },
       },
@@ -73,7 +73,7 @@ export class MediaController {
     responses: {
       '200': {
         description: 'Media PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -88,7 +88,7 @@ export class MediaController {
     responses: {
       '200': {
         description: 'Media model instance',
-        content: {'application/json': {schema: {'x-ts-type': Media}}},
+        content: { 'application/json': { schema: { 'x-ts-type': Media } } },
       },
     },
   })
@@ -132,6 +132,15 @@ export class MediaController {
     },
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
+    let media = await this.mediaRepository.findById(id);
+
+    try {
+      fs.unlink(media.path, (err) => {
+        if (err) throw err;
+      });
+    } catch (err) {
+      // handle the error
+    }
     await this.mediaRepository.deleteById(id);
   }
 }
