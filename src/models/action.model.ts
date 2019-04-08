@@ -6,7 +6,7 @@ export enum ActionType {
 @model()
 export class Action extends Model {
   @property({
-    type: 'string', // need to be enum
+    type: 'string', // should be enum
   })
   type?: string;
 

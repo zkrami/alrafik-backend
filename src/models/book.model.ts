@@ -1,5 +1,6 @@
 import { Entity, model, property } from '@loopback/repository';
 import { Page } from './page.model';
+import { Control } from '.';
 
 @model()
 export class Book extends Entity {
@@ -30,6 +31,12 @@ export class Book extends Entity {
   })
   pages: Page[];
 
+
+  // default control for pages
+  @property({
+    type: 'object',
+  })
+  control?: Control;
 
   constructor(data?: Partial<Book>) {
     super(data);

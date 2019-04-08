@@ -133,6 +133,7 @@ export class MediaController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     let media = await this.mediaRepository.findById(id);
+    // @todo check if a book is related to the media
 
     try {
       fs.unlink(media.path, (err) => {
