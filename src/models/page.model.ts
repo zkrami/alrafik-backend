@@ -1,8 +1,8 @@
 import { Entity, model, property, Model } from '@loopback/repository';
 import { Control } from './control.model';
-import { DrawingContent } from '.';
+
 @model()
-export class Page extends DrawingContent {
+export class Page extends Model {
 
   @property({
     type: 'string',
@@ -31,6 +31,19 @@ export class Page extends DrawingContent {
     type: 'object',
   })
   control?: Control;
+
+
+  @property({
+    type: 'string',
+  })
+  content?: string; // svg content
+
+  // key => value associative array to Shape Model
+  @property({
+    type: 'object',
+    default: {}
+  })
+  shapes: object;
 
   constructor(data?: Partial<Page>) {
     super(data);
