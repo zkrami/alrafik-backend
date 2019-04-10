@@ -1,5 +1,6 @@
-import { Entity, model, property, Model } from '@loopback/repository';
+import { model, property, Model } from '@loopback/repository';
 import { Control } from './control.model';
+import { Direction } from './direction.model';
 
 @model()
 export class Page extends Model {
@@ -45,6 +46,12 @@ export class Page extends Model {
   })
   shapes: object;
 
+
+  @property({
+    type: 'object',
+    default: {}
+  })
+  direction: Direction;
   constructor(data?: Partial<Page>) {
     super(data);
   }

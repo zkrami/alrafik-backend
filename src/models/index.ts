@@ -5,3 +5,4 @@ export * from './action.model';
 export * from './media.model';
 export * from './control.model';
 export * from './test.model';
+export * from './direction.model';
