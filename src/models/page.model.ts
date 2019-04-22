@@ -1,6 +1,7 @@
 import { model, property, Model } from '@loopback/repository';
 import { Control } from './control.model';
 import { Direction } from './direction.model';
+import { Action } from '.';
 
 @model()
 export class Page extends Model {
@@ -52,6 +53,15 @@ export class Page extends Model {
     default: {}
   })
   direction: Direction;
+
+  @property({
+    type: 'array',
+    itemType: 'object',
+    default: [],
+  })
+  menu: Action[] = [];
+
+
   constructor(data?: Partial<Page>) {
     super(data);
   }

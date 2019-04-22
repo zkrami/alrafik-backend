@@ -26,7 +26,7 @@ export class Book extends Entity {
 
   @property({
     type: 'array',
-    itemType: Page,
+    itemType: 'object',
     default: []
   })
   pages: Page[];

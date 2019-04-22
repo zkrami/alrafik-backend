@@ -120,6 +120,7 @@ export class BookController {
     @param.path.string('id') id: string,
     @requestBody() book: Book,
   ): Promise<void> {
+
     await this.bookRepository.updateById(id, book);
   }
 
