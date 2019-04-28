@@ -64,6 +64,7 @@
     "memorystream": "^0.3.1",
     "node-uploadx": "^1.1.1",
     "p-event": "^3.0.0",
+    "randomstring": "^1.1.5",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

@@ -12,6 +12,14 @@ export class Book extends Entity {
   })
   id: string;
 
+
+
+  @property({
+    type: 'string',
+    required: false
+  })
+  code: string;
+
   @property({
     type: 'object',
     required: true,

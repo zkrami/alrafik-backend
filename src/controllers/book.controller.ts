@@ -47,6 +47,8 @@ export class BookController {
     },
   })
   async create(@requestBody() book: Book): Promise<Book> {
+
+    book.code = Date.now().toString();
     return await this.bookRepository.create(book);
   }
 
