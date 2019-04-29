@@ -50,6 +50,8 @@ export class ExpressServer {
 
     // auth
     this.app.use((req, res, next) => {
+
+      //@ts-ignore
       req.user = { id: 'userId' };
       next();
     });
@@ -98,6 +100,7 @@ export class ExpressServer {
 
   public async start() {
     this.server = this.app.listen(3000);
+    //@ts-ignore
     await pEvent(this.server, 'listening');
   }
 
@@ -105,6 +108,7 @@ export class ExpressServer {
   public async stop() {
     if (!this.server) return;
     this.server.close();
+    //@ts-ignore
     await pEvent(this.server, 'close');
   }
 }
