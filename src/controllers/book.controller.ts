@@ -22,7 +22,7 @@ import {
 } from '@loopback/rest';
 
 import { Book, Shape, ActionType } from '../models';
-import { BookRepository, MediaRepository } from '../repositories';
+import { BookRepository, MediaRepository, AppvRepository } from '../repositories';
 import { response } from 'express';
 import { Stream } from 'stream';
 import { inject } from '@loopback/core';
@@ -34,6 +34,8 @@ export class BookController {
     public bookRepository: BookRepository,
     @repository(MediaRepository)
     public mediaRepository: MediaRepository,
+    @repository(AppvRepository)
+    public appv: AppvRepository,
     @inject(RestBindings.Http.RESPONSE) public response: Response,
 
   ) { }
@@ -47,8 +49,12 @@ export class BookController {
     },
   })
   async create(@requestBody() book: Book): Promise<Book> {
+    let counter = await this.appv.getBookCounter();
+    counter++;
+    book.code = counter.toString();
 
-    book.code = Date.now().toString();
+    await this.appv.addBookCounter();
+
     return await this.bookRepository.create(book);
   }
 
