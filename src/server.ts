@@ -72,7 +72,8 @@ export class ExpressServer {
       media.name = req.file.metadata.name;
       media.type = req.file.metadata.mimeType;
       media.size = req.file.size;
-      media.url = "uploads/" + req.file.filename;
+
+      media.url = "uploads/" + path.basename(req.file.path);
 
       if (req.header("bookId"))
         media.bookId = req.header("bookId") as string;
